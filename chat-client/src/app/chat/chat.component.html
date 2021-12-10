@@ -1,0 +1,66 @@
+
+
+<section class="msger">
+  <header class="msger-header">
+    <div class="msger-header-title">
+      <i class="fas fa-comment-alt"></i> SimpleChat
+      <button (click)="selectUser('bot')">BOT</button>
+      <button  (click)="selectUser('me')">ME</button>
+    </div>
+    <div class="msger-header-options">
+      <span><i class="fas fa-cog"></i></span>
+    </div>
+  </header>
+
+  <main class="msger-chat">
+      <ng-container *ngFor="let item of lstChat">
+          <ng-container [ngTemplateOutlet]="item.user === 'me'? me : bot" [ngTemplateOutletContext]="{message: item.message, time: item.time, name: item.user}"></ng-container>
+      </ng-container>
+  </main>
+
+  <div class="msger-inputarea">
+    <input type="text" class="msger-input" placeholder="Enter your message..." [(ngModel)]="message" (keydown.enter)="sendMessage()">
+    <button type="button" class="msger-send-btn" (click)="sendMessage()" >Send</button>
+  </div>
+</section>
+
+<ng-template #bot let-message='message' let-time='time' let-name='name'>
+  <div class="msg left-msg">
+    <div
+      class="msg-img"
+      style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
+    ></div>
+
+    <div class="msg-bubble">
+      <div class="msg-info">
+        <div class="msg-info-name">{{name}}</div>
+        <div class="msg-info-time">{{time}}</div>
+      </div>
+
+      <div class="msg-text">
+       {{message}}
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #me let-message='message' let-time='time' let-name='name'>
+
+  <div class="msg right-msg">
+    <div
+      class="msg-img"
+      style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
+    ></div>
+
+    <div class="msg-bubble">
+      <div class="msg-info">
+        <div class="msg-info-name">{{name}}</div>
+        <div class="msg-info-time">{{time}}</div>
+      </div>
+
+      <div class="msg-text">
+          {{message}}
+      </div>
+    </div>
+  </div>
+</ng-template>
